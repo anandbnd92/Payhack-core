@@ -71,7 +71,7 @@
 		<dependency>
 			<groupId>io.jsonwebtoken</groupId>
 			<artifactId>jjwt</artifactId>
-<!--			<version>0.11.5</version> &lt;!&ndash; Use the latest version compatible with your Spring Boot version &ndash;&gt;-->
+			<version>0.9.1</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
 		<dependency>
