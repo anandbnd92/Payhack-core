@@ -15,7 +15,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 @RestController
+@RequestMapping
 public class AuthController {
     @Autowired
     private UserRepository userRepository;
@@ -33,39 +36,43 @@ public class AuthController {
         return ResponseEntity.ok().body("User registered successfully");
     }
 
-    @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
-        try {
-            // Perform authentication
-            Authentication authentication = authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword())
-            );
+//        @PostMapping("/userlogin")
+//    public ResponseEntity<?> login(@RequestBody User user) {
+//        System.out.println(userRepository.findByUsername(user.getUsername()));
+//        Optional<User> userOptional = Optional.ofNullable(userRepository.findByUsername(user.getUsername()));
+//
+//
+//        try {
+//
+//            Authentication authentication = authenticationManager.authenticate(
+//                    new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword())
+//            );
+//
+//            SecurityContextHolder.getContext().setAuthentication(authentication);
+//
+//            return ResponseEntity.ok(new LoginResponse("User authenticated successfully", user.getUsername()));
+//        } catch (AuthenticationException e) {
+//            // If authentication fails, return an error response
+//            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid username or password");
+//        }
+//    }
+//    @PostMapping("/userlogin")
+//    public ResponseEntity<?> login(@RequestBody User user) {
+//
+////        String username = user.getUsername();
+//        String isuser = userRepository.isuserExist(user.getUsername());
+//        System.out.println("isuser" + isuser);
+//
+//        if (isuser != null) {
+//            // User exists, return success response
+//            return ResponseEntity.ok("User exists");
+//        } else {
+//            // User does not exist, return error response
+//            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("User does not exist");
+//        }
+//    }
 
-            SecurityContextHolder.getContext().setAuthentication(authentication);
 
-            // If authentication is successful, return a success response
-            return ResponseEntity.ok(new LoginResponse("User authenticated successfully", loginRequest.getUsername()));
-        } catch (AuthenticationException e) {
-            // If authentication fails, return an error response
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid username or password");
-        }
-    }
 }
-@Data
-class LoginRequest {
-    private String username;
-    private String password;
 
-    // getters and setters
-}
 
-@NoArgsConstructor
-@AllArgsConstructor
-@Getter
-@Setter
-class LoginResponse {
-    private String message;
-    private String username;
-
-    // Constructors, getters, and setters
-}
