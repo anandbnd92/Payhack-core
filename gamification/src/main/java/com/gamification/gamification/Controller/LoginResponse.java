@@ -11,7 +11,7 @@ import lombok.Setter;
 @Setter
 class LoginResponse {
     private String message;
-    private String username;
+    private String token;
 
     // Constructors, getters, and setters
 }
