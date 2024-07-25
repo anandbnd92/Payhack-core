@@ -17,12 +17,13 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 @Configuration
 public class SecurityConfig {
+
     @Autowired
     private UserDetailsService userDetailsService;
 
-    public SecurityConfig(UserDetailsService userDetailsService) {
-        this.userDetailsService = userDetailsService;
-    }
+//    public SecurityConfig(UserDetailsService userDetailsService) {
+//        this.userDetailsService = userDetailsService;
+//    }
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -32,10 +33,10 @@ public class SecurityConfig {
                         .requestMatchers("/register", "/login", "/css/**").permitAll()
                         .anyRequest().authenticated()
                 )
-                .authorizeHttpRequests(authz -> authz
-                        .requestMatchers("/subjects/**", "/questions/**", "/scores", "/getscore", "/auth/login").permitAll()
-                        .anyRequest().authenticated()
-                )
+//                .authorizeHttpRequests(authz -> authz
+//                        .requestMatchers("/subjects/**", "/questions/**", "/scores", "/getscore", "/auth/login").permitAll()
+//                        .anyRequest().authenticated()
+//                )
                 .formLogin(formLogin -> formLogin
                         .loginPage("/login")
                         .defaultSuccessUrl("/home", true)
@@ -71,8 +72,13 @@ public class SecurityConfig {
     }
 
 
-    @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
+//    @Autowired
+//    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+//        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
+//    }
+
+
+    public void configure(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
+        authenticationManagerBuilder.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
     }
 }
