@@ -20,6 +20,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping
+@CrossOrigin(origins = "*", maxAge = 3600)
 public class AuthController {
     @Autowired
     private UserRepository userRepository;
