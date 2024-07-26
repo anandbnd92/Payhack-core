@@ -40,12 +40,17 @@ public class AuthController {
         return ResponseEntity.ok().body("User registered successfully");
     }
 
+
+
     @PostMapping("/userlogin")
     public ResponseEntity<?> login(@RequestBody User user) {
         System.out.println(userRepository.findByUsername(user.getUsername()));
         Optional<User> userOptional = Optional.ofNullable(userRepository.findByUsername(user.getUsername()));
-
-
+        if (!userOptional.isPresent()) {
+//            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("");
+            return ResponseEntity.ok(new LoginResponse("Username does not exist", "--",user.getUsername(),"s02"));
+        }
+        System.out.println(userOptional+"userOptional");
         try {
 
             Authentication authentication = authenticationManager.authenticate(
@@ -56,10 +61,11 @@ public class AuthController {
 
             String jwt = jwtUtil.generateToken(user.getUsername());
 
-            return ResponseEntity.ok(new LoginResponse("User authenticated successfully", jwt));
+            return ResponseEntity.ok(new LoginResponse("User authenticated successfully", jwt,user.getUsername(),"s01"));
         } catch (AuthenticationException e) {
-            // If authentication fails, return an error response
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid username or password");
+
+//            return ResponseEntity.ok(new LoginResponse("Username does not exist", "--",user.getUsername(),"s02"));
         }
     }
 
