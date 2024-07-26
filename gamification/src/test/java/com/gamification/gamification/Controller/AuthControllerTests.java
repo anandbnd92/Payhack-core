@@ -66,7 +66,7 @@ class AuthControllerTests {
         User user = new User();
         user.setUsername("testuser");
         user.setPassword("testpassword");
-
+        when(userRepository.findByUsername(user.getUsername())).thenReturn(user);
         Authentication authentication = mock(Authentication.class);
         when(authenticationManager.authenticate(any()))
                 .thenReturn(authentication);
@@ -88,7 +88,7 @@ class AuthControllerTests {
         User user = new User();
         user.setUsername("testuser");
         user.setPassword("wrongpassword");
-
+        when(userRepository.findByUsername(user.getUsername())).thenReturn(user);
         when(authenticationManager.authenticate(any()))
                 .thenThrow(new AuthenticationException("Invalid credentials") {});
 
