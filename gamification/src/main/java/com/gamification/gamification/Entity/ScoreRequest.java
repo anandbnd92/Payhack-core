@@ -6,6 +6,13 @@ public class ScoreRequest {
     private int correctCount;
     private String submittedUser;
 
+    public ScoreRequest(String subject, int totalQuestions, int correctCount, String submittedUser) {
+        this.subject = subject;
+        this.totalQuestions = totalQuestions;
+        this.correctCount = correctCount;
+        this.submittedUser = submittedUser;
+    }
+
     public String getSubject() {
         return subject;
     }
